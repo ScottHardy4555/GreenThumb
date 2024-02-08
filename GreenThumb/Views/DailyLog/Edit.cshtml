@@ -1,0 +1,20 @@
+﻿@model DailyLog
+@{ 
+    Layout = "_Layout";
+    ViewBag.Title = $"{ViewBag.Action}";
+}
+
+<div>
+    <h2>Edit Log</h2>
+    <form asp-controller="DailyLog" asp-action="Edit" method="post">
+        <div class="form-group">
+            <label asp-for="Date" class="control-label"></label>
+            <input asp-for="Date" class="form-control" type="date" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="DailyLogId" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-controller="DailyLog" asp-action="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

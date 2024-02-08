@@ -1,0 +1,26 @@
+﻿@model List<DailyLog>
+@{
+    ViewBag.Title = $"{ViewBag.Action}";
+    Layout = "_Layout";
+}
+
+<h2>System Logs</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>ID</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td><a asp-controller="DailyLog" asp-action="View" asp-route-id="@log.DailyLogId">@log.Date.ToString()</a></td>
+                <td><a asp-controller="DailyLog" asp-action="View" asp-route-id="@log.DailyLogId">@log.DailyLogId</a></td>
+                <td><a asp-controller="DailyLog" asp-action="Delete" asp-route-id="@log.DailyLogId" class="btn btn-danger">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

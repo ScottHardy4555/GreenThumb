@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-start">
+    <div class="mb-3">
+        <h1>Project Green Thumb</h1>
+        <p>Automated hydroponic systems for the home</p>
+    </div>
+
+    <div class="mb-3">
+        <h1>Admin</h1>
+        <table class="table table-bordered">
+            <tr>
+                <td><a asp-controller="DailyLog" asp-action="List" >System Logs</a></td>
+            </tr>
+            <tr>
+                <td>Manage Technicians</td>
+            </tr>
+            <tr>
+                <td>Manage Contacts</td>
+            </tr>
+            <tr>
+                <td>Manage Research Reports</td>
+            </tr>
+            <tr>
+                <td>Manage Registrations</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h1>Technicians</h1>
+
+        <table class="table table-bordered">
+            <tr>
+                <td>Update Incident</td>
+            </tr>
+        </table>
+    </div>
+</div>
