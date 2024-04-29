@@ -1,0 +1,15 @@
+﻿@using StatusReportM = GreenThumb.Models.DomainModels.StatusReport;
+@model StatusReportM;
+@{
+    ViewBag.Title = $"{ViewBag.Action}";
+}
+
+<div>
+    <h2>Confirm Deletion</h2>
+    <h3>Report: @Model.Time.ToString()</h3>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="StatusReportId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-area="DailyLog" asp-controller="StatusReport" asp-action="View" asp-route-id="@Model.DailyLogId" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

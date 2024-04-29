@@ -1,0 +1,47 @@
+﻿@using StatusReportM = GreenThumb.Models.DomainModels.StatusReport;
+@model List<StatusReportM>;
+@{
+    ViewBag.Title = $"{ViewBag.Action}";
+    Layout = "_Layout";
+    string statusMessage = (string?)TempData["StatusMessage"] ?? string.Empty;
+}
+
+@if (statusMessage != string.Empty)
+{
+    <div id="StatusMessage" class="bg-primary text-white text-center p-3 rounded">
+        <h2>@statusMessage</h2>
+    </div>
+}
+<h2>@ViewBag.Log.Date.ToString("MMMM") @ViewBag.Log.Date.Day, @ViewBag.Log.Date.Year</h2>
+<a asp-controller="StatusReport" asp-action="Add" asp-route-dailyLogId="@ViewBag.Log.DailyLogId">Create Report</a>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Time</th>
+            <th>Temperature</th>
+            <th>Humidity</th>
+            <th>PPM</th>
+            <th>EC</th>
+            <th>PH</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>@report.StatusReportId</td>
+                <td>@report.Time</td>
+                <td>@report.Temperature</td>
+                <td>@report.Humidity</td>
+                <td>@report.PartsPerMillion</td>
+                <td>@report.ElectricalConductivity</td>
+                <td>@report.PH</td>
+                <td><a asp-controller="StatusReport" asp-action="Edit" asp-route-id="@report.StatusReportId" asp-route-dailyLogId="@ViewBag.Log.DailyLogId" class="btn btn-secondary">Edit</a></td>
+                <td><a asp-controller="StatusReport" asp-action="Delete" asp-route-id="@report.StatusReportId" class="btn btn-secondary">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

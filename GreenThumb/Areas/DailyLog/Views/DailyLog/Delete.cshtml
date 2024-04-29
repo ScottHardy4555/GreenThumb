@@ -1,0 +1,16 @@
+﻿@using DailyLogM = GreenThumb.Models.DomainModels.DailyLog;
+@model DailyLogM;
+@{
+    ViewBag.Title = "Delete DailyLog";
+    ViewBag.Title = $"{ViewBag.Action}";
+}
+
+<div>
+    <h2>Confirm Deletion</h2>
+    <h3>@Model.Date.ToString()</h3>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="DailyLogId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-area="DailyLog" asp-controller="DailyLog" asp-action="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

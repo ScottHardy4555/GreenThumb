@@ -1,0 +1,64 @@
+﻿@model GreenThumb.Models.DomainModels.TicketManagerVM;
+@{
+    ViewBag.Title = "View Ticket List";
+    ViewBag.Title = $"{ViewBag.Action}";
+    string statusMessage = (string?)TempData["StatusMessage"] ?? string.Empty;
+    GreenThumb.Models.DomainModels.Technician CurrentTechnician = ViewBag.CurrentTechnician;
+}
+
+@if (statusMessage != string.Empty)
+{
+    <div id="StatusMessage" class="bg-primary text-white text-center p-3 rounded">
+        <h2>@statusMessage</h2>
+    </div>
+}
+@if (CurrentTechnician != null)
+{
+    <h2>Technician: @CurrentTechnician.Name</h2>
+    <h2>Assigned/Open Tickets</h2>
+}
+else
+{
+    <h2>Ticket List</h2>
+
+}
+<a asp-controller="Ticket" asp-action="Add">Register Ticket</a>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Technician</th>
+                <th>Type</th>
+                <th>Opened On</th>
+                <th>Closed On</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model.Tickets)
+            {
+                <tr>
+                    <td>@ticket.Title</td>
+                    <td>@(Model.Technicians.First(t => t.TechnicianId == ticket.TechnicianId).Name)</td>
+                    <td>@ticket.TypeName</td>
+                    <td>@ticket.DateOpened.ToString()</td>
+                    <td>@(ticket.DateClosed == null ? "-" : ticket.DateClosed)</td>
+                    <td><a asp-controller="Ticket" asp-action="Edit" asp-route-id="@ticket.TicketId" class="btn btn-secondary">Edit</a></td>
+                    @if (ticket.DateClosed == null)
+                    {
+                        <td><a asp-controller="Ticket" asp-action="CloseTicket" class="btn btn-secondary" asp-route-id="@ticket.TicketId">Close</a></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td><a asp-controller="Ticket" asp-action="Delete" asp-route-id="@ticket.TicketId" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-area="Technician" asp-controller="Technician" asp-action="Get" class="btn btn-primary">Switch Technician</a>
+</div>

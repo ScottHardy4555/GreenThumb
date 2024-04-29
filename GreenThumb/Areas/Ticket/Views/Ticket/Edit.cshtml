@@ -1,0 +1,43 @@
+﻿@model GreenThumb.Models.DomainModels.AddEditTicketVm;
+@{
+
+}
+
+<div>
+    <h2>Edit Ticket</h2>
+    <form asp-controller="Ticket" asp-action="Edit" method="post">
+        <div class="form-group mb-3">
+            <label asp-for="Ticket.Title" class="control-label"></label>
+            <input asp-for="Ticket.Title" class="form-control" />
+            <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Ticket.Description" class="control-label"></label>
+            <textarea asp-for="Ticket.Description" class="form-control"></textarea>
+            <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="Ticket.TechnicianId" class="control-label">Assigned Technician</label>
+            <select asp-for="Ticket.TechnicianId" 
+                    asp-items="@(new SelectList(Model.Technicians, "TechnicianId", "Name", Model.Ticket.TechnicianId ?? null))" 
+                    class="form-control">
+                <option value="">-- Select Technician --</option>
+            </select>
+            <span asp-validation-for="Ticket.TechnicianId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-4">
+            <label asp-for="Ticket.TypeName" class="control-label"></label>
+            <select asp-for="Ticket.TypeName" asp-items="@(new SelectList(Model.TicketTypes))" class="form-control">
+                <option value="">-- Select Type --</option>
+            </select>
+            <span asp-validation-for="Ticket.TypeName" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="Ticket.TicketId" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-controller="Ticket" asp-action="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

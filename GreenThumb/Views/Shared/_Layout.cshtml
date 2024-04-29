@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using GreenThumb.Models.DomainModels;
+@{
+    string a = ViewContext.RouteData.Values["area"]?.ToString() ?? "";
+    string ac = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,7 +16,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GreenThumb</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,11 +26,58 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @(string.IsNullOrEmpty(a)&&ac!="About"?"active":"")" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link @(a=="DailyLog"?"active":"")" asp-area="DailyLog" asp-controller="DailyLog" asp-action="List">Logs</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(a=="Technician"?"active":"")" asp-area="Technician" asp-controller="Technician" asp-action="List">Technicians</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(a=="Contact"?"active":"")" asp-area="Contact" asp-controller="Contact" asp-action="List">Contacts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @((a=="Technician" && ac=="Get") || (a=="Ticket") ?"active":"")" asp-area="Technician" asp-controller="Technician" asp-action="Get">Tickets</a>
+                        </li>
+                        <li class="nav-item ms-auto">
+                            <a class="nav-link @(string.IsNullOrEmpty(a)&&ac=="About"?"active":"")" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        @using Microsoft.AspNetCore.Identity
+                        @inject SignInManager<User> signInManager
+                        @inject UserManager<User> userManager
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <span class="text-light">@User.Identity.Name</span>
+                            </li>
+                            <li class="nav-item mx-1">
+                                <form method="post" asp-action="Logout" asp-controller="Account" asp-area="">
+                                    <input type="submit" value="Log Out" class="btn btn-outline-light" />
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-action="ChangePassword" asp-controller="Account" asp-area="" class="btn btn-outline-light">Reset Password</a>
+                            </li>
+                        }
+                        else
+                        {
+                            var action = ViewContext.RouteData.Values["action"]?.ToString();
+                            <li class="nav-item">
+                                <a asp-action="Register" asp-controller="Account" asp-area="" class="nav-link">
+                                    <span class="fas fa-edit"></span>&nbsp;Register
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-action="Login" asp-controller="Account" asp-area="" class="btn btn-outline-light">Log In</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -38,7 +91,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - GreenThumb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - GreenThumb
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

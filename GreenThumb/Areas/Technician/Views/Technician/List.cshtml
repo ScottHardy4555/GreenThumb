@@ -1,0 +1,40 @@
+﻿@using TechnicianM = GreenThumb.Models.DomainModels.Technician;
+@model List<TechnicianM>;
+@{
+    ViewBag.Title = $"{ViewBag.Action}";
+    string statusMessage = (string?)TempData["StatusMessage"] ?? string.Empty;
+}
+
+@if (statusMessage != string.Empty)
+{
+    <div id="StatusMessage" class="bg-primary text-white text-center p-3 rounded">
+        <h2>@statusMessage</h2>
+    </div>
+}
+<h2>Technician List</h2>
+<a asp-controller="Technician" asp-action="Add">Register Technician</a>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var technician in Model)
+            {
+                <tr>
+                    <td>@technician.Name</td>
+                    <td>@technician.Email</td>
+                    <td>@technician.PhoneNumber</td>
+                    <td><a asp-controller="Technician" asp-action="Edit" asp-route-id="@technician.TechnicianId" class="btn btn-secondary">Edit</a></td>
+                    <td><a asp-controller="Technician" asp-action="Delete" asp-route-id="@technician.TechnicianId" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

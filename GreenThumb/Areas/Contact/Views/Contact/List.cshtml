@@ -1,0 +1,43 @@
+﻿@using ContactM = GreenThumb.Models.DomainModels.Contact;
+@model List<ContactM>;
+@{
+    ViewBag.Title = "View Contact List";
+    ViewBag.Title = $"{ViewBag.Action}";
+    string statusMessage = (string?)TempData["StatusMessage"] ?? string.Empty;
+}
+
+@if (statusMessage != string.Empty)
+{
+    <div id="StatusMessage" class="bg-primary text-white text-center p-3 rounded">
+        <h2>@statusMessage</h2>
+    </div>
+}
+<h2>Contact List</h2>
+<a asp-controller="Contact" asp-action="Add">Create Contact</a>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Relation</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in Model)
+            {
+                <tr>
+                    <td>@contact.FirstName @contact.LastName</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.PhoneNumber</td>
+                    <td>@contact.Relation</td>
+                    <td><a asp-controller="Contact" asp-action="Edit" asp-route-id="@contact.ContactId" class="btn btn-secondary">Edit</a></td>
+                    <td><a asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.ContactId" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

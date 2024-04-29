@@ -13,16 +13,16 @@
         <h1>Admin</h1>
         <table class="table table-bordered">
             <tr>
-                <td><a asp-controller="DailyLog" asp-action="List" >System Logs</a></td>
+                <td><a asp-area="DailyLog"  asp-controller="DailyLog" asp-action="List" >System Logs</a></td>
             </tr>
             <tr>
-                <td>Manage Technicians</td>
+                <td><a asp-area="Technician" asp-controller="Technician" asp-action="List">Manage Technicians</a></td>
             </tr>
             <tr>
-                <td>Manage Contacts</td>
+                <td><a asp-area="Contact" asp-controller="Contact" asp-action="List">Manage Contacts</a></td>
             </tr>
             <tr>
-                <td>Manage Research Reports</td>
+                <td><a asp-area="Technician" asp-controller="Technician" asp-action="Get">Manage Tickets</a></td>
             </tr>
             <tr>
                 <td>Manage Registrations</td>
@@ -35,7 +35,7 @@
 
         <table class="table table-bordered">
             <tr>
-                <td>Update Incident</td>
+                <td>Update Ticket</td>
             </tr>
         </table>
     </div>

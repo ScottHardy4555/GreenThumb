@@ -1,0 +1,16 @@
+﻿@using ContactM = GreenThumb.Models.DomainModels.Contact;
+@model ContactM;
+@{
+    ViewBag.Title = "Delete Contact";
+    ViewBag.Title = $"{ViewBag.Action}";
+}
+
+<div>
+    <h2>Confirm Deletion</h2>
+    <h3>@Model.FirstName @Model.LastName</h3>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="ContactId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-area="Contact" asp-controller="Contact" asp-action="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+﻿@model GreenThumb.Models.DomainModels.GetTechnicianVM;
+@{
+    ViewBag.Title = $"{ViewBag.Action}";
+    List<GreenThumb.Models.DomainModels.Technician> technicians = ViewBag.Technicians;
+    string statusMessage = (string?)TempData["StatusMessage"] ?? string.Empty;
+}
+
+@if (statusMessage != string.Empty)
+{
+    <div id="StatusMessage" class="bg-primary text-white text-center p-3 rounded">
+        <h2>@statusMessage</h2>
+    </div>
+}
+
+<h2>Technician</h2>
+<form asp-area="Technician" asp-controller="Technician" asp-action="Get" method="post">
+    <select asp-for="TechnicianId" asp-items="@(new SelectList(technicians, "TechnicianId", "Name", Model.TechnicianId ?? null))" class="form-control">
+        <option value="">-- Select a Technician --</option>
+        <option value="_all">All Tickets</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Select</button>
+</form>

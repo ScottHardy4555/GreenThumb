@@ -1,0 +1,48 @@
+﻿@model GreenThumb.Models.DomainModels.AddEditStatusReportVM;
+@{
+    Layout = "_Layout";
+    ViewBag.Title = $"{ViewBag.Action}";
+}
+
+<h2>Edit Report</h2>
+<form asp-action="Edit" asp-route-dailyLogId="@ViewBag.DailyLogId" method="post">
+    <div class="mb-3">
+        <label asp-for="Time" class="form-label"></label>
+        <input asp-for="Time" class="form-control" type="time" />
+        <span asp-validation-for="Time" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Temperature" class="form-label"></label>
+        <input asp-for="Temperature" class`="form-control" />
+        <span asp-validation-for="Temperature" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Humidity" class="form-label"></label>
+        <input asp-for="Humidity" class`="form-control" />
+        <span asp-validation-for="Humidity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PartsPerMillion" class="form-label">PPM</label>
+        <input asp-for="PartsPerMillion" class`="form-control" />
+        <span asp-validation-for="PartsPerMillion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ElectricalConductivity" class="form-label">EC</label>
+        <input asp-for="ElectricalConductivity" class`="form-control" />
+        <span asp-validation-for="ElectricalConductivity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PH" class="form-label"></label>
+        <input asp-for="PH" class`="form-control" />
+        <span asp-validation-for="PH" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="StatusReportId" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-controller="StatusReport" asp-action="View" asp-route-id="@ViewBag.DailyLogId" class="btn btn-secondary">Cancel</a>
+</form>
