@@ -30,15 +30,26 @@ namespace GreenThumb.Areas.Ticket.Controllers
 			TicketManagerVM ticketManagerVM = new TicketManagerVM();
 			if (technicianId != string.Empty)
 			{
-				if (technicianId != "_all")
+				int tId = int.Parse(technicianId);
+				if (tId > 0)
 				{
-					int tId = int.Parse(technicianId);
 					ticketManagerVM.Tickets = Tickets.List().Where(t => t.TechnicianId == tId).ToList();
 					ViewBag.CurrentTechnician = Technicians.Get(tId);
+				}
+				else if (tId == -1)
+				{
+					ticketManagerVM.Tickets = Tickets.List().Where(t => t.TechnicianId == null).ToList();
+					ViewBag.FilterSelected = "unassigned";
+				}
+				else if (tId == -2)
+				{
+					ticketManagerVM.Tickets = Tickets.List().Where(t => t.DateClosed == null).ToList();
+					ViewBag.FilterSelected = "open";
 				}
 				else
 				{
 					ticketManagerVM.Tickets = Tickets.List().ToList();
+					ViewBag.FilterSelected = "all";
 				}
 			}
 			else
@@ -52,6 +63,14 @@ namespace GreenThumb.Areas.Ticket.Controllers
 
 
 			return View(ticketManagerVM);
+		}
+
+		[HttpGet]
+		public IActionResult Filter(string id)
+		{
+			MySession session = new MySession(HttpContext.Session);
+			session.SetTechnicianId(id);
+			return RedirectToAction("List");
 		}
 
 		public IActionResult View(int id)
@@ -95,7 +114,6 @@ namespace GreenThumb.Areas.Ticket.Controllers
 				ticket.Title != null &&
 				ticket.Description != string.Empty &&
 				ticket.Description != null &&
-				ticket.TechnicianId != null &&
 				ticket.TypeName != string.Empty &&
 				ticket.TypeName != null)
             {
@@ -111,7 +129,7 @@ namespace GreenThumb.Areas.Ticket.Controllers
 					Tickets.Update(ticket);
 					Tickets.Save();
 					SetStatusMessage($"{ticket.Title} was updated.");
-					return RedirectToAction("List", new { id = ticket.TicketId });
+					return RedirectToAction("List");
                 }
             }
             else
@@ -138,7 +156,7 @@ namespace GreenThumb.Areas.Ticket.Controllers
 			Tickets.Delete(ticket);
 			Tickets.Save();
 			SetStatusMessage($"{ticket.Title} was deleted.");
-			return RedirectToAction("List", "Ticket");
+			return RedirectToAction("List");
 		}
 
 		[Authorize(Roles = "Admin")]

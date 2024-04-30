@@ -23,6 +23,16 @@ else
 
 }
 <a asp-controller="Ticket" asp-action="Add">Register Ticket</a>
+<div class="container">
+    @if (ViewBag.FilterSelected != null)
+    {
+        <div class="row">
+            <a class="rounded-pill @(ViewBag.FilterSelected == "all" ? "bg-primary text-white" : "") col-2" asp-controller="Ticket" asp-action="Filter" asp-route-id="0">All Tickets</a>
+            <a class="rounded-pill @(ViewBag.FilterSelected == "unassigned" ? "bg-primary text-white" : "") col-2" asp-controller="Ticket" asp-action="Filter" asp-route-id="-1">Unassigned Tickets</a>
+            <a class="rounded-pill @(ViewBag.FilterSelected == "open" ? "bg-primary text-white" : "") col-2" asp-controller="Ticket" asp-action="Filter" asp-route-id="-2">Open Tickets</a>
+        </div>
+    }
+</div>
 <div>
     <table class="table table-striped">
         <thead>
@@ -41,8 +51,12 @@ else
             @foreach (var ticket in Model.Tickets)
             {
                 <tr>
+                    @{
+                        GreenThumb.Models.DomainModels.Technician? tech = Model.Technicians.FirstOrDefault(t => t.TechnicianId == ticket.TechnicianId);
+                        string techName = tech == null ? "---" : tech.Name;
+                    }
                     <td>@ticket.Title</td>
-                    <td>@(Model.Technicians.First(t => t.TechnicianId == ticket.TechnicianId).Name)</td>
+                    <td>@techName</td>
                     <td>@ticket.TypeName</td>
                     <td>@ticket.DateOpened.ToString()</td>
                     <td>@(ticket.DateClosed == null ? "-" : ticket.DateClosed)</td>

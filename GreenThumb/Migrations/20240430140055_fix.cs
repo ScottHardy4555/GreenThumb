@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GreenThumb.Migrations
 {
     /// <inheritdoc />
-    public partial class final : Migration
+    public partial class fix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -237,7 +237,7 @@ namespace GreenThumb.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TechnicianId = table.Column<int>(type: "int", nullable: false),
+                    TechnicianId = table.Column<int>(type: "int", nullable: true),
                     TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOpened = table.Column<DateOnly>(type: "date", nullable: true),
                     DateClosed = table.Column<DateOnly>(type: "date", nullable: true)
@@ -249,8 +249,7 @@ namespace GreenThumb.Migrations
                         name: "FK_Tickets_Technicians_TechnicianId",
                         column: x => x.TechnicianId,
                         principalTable: "Technicians",
-                        principalColumn: "TechnicianId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TechnicianId");
                 });
 
             migrationBuilder.InsertData(

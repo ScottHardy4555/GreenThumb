@@ -108,7 +108,7 @@ namespace GreenThumb.Areas.Technician.Controllers
 			if (technicianId == string.Empty || technicianId == null)
             {
                 ViewBag.Technicians = Technicians.List().ToList();
-                SetStatusMessage("Please select an option.");
+                ModelState.AddModelError("TechnicianId", "Please select a technician");
                 return View(new GetTechnicianVM());
             }
             MySession session = new MySession(HttpContext.Session);

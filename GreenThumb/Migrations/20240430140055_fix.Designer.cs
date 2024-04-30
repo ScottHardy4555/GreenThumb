@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenThumb.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20240429050644_final")]
-    partial class final
+    [Migration("20240430140055_fix")]
+    partial class fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -221,7 +221,6 @@ namespace GreenThumb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TechnicianId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -466,9 +465,7 @@ namespace GreenThumb.Migrations
                 {
                     b.HasOne("GreenThumb.Models.DomainModels.Technician", "Technician")
                         .WithMany()
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TechnicianId");
 
                     b.Navigation("Technician");
                 });

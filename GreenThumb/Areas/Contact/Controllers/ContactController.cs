@@ -5,6 +5,7 @@ using ContactM = GreenThumb.Models.DomainModels.Contact;
 using NuGet.Protocol.Core.Types;
 using Microsoft.AspNetCore.Authorization;
 using GreenThumb.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GreenThumb.Areas.Contact.Controllers
 {
@@ -48,6 +49,12 @@ namespace GreenThumb.Areas.Contact.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (EmailExists(contact))
+                {
+					ModelState.AddModelError("Email", "Email already exists");
+					ViewBag.Action = contact.ContactId == 0 ? "Add" : "Edit";
+					return View(contact);
+				}
                 if (contact.ContactId == 0)
                 {
 					Contacts.Insert(contact);
@@ -91,6 +98,8 @@ namespace GreenThumb.Areas.Contact.Controllers
         private void SetStatusMessage(string message)
         {
             TempData["StatusMessage"] = message;
-        }
-    }
+		}
+
+		public bool EmailExists(ContactM contact) => Contacts.List().Any(c => c.Email == contact.Email);
+	}
 }

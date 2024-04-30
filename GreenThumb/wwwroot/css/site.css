@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.input-validation-error{
+    border: 2px solid #dc3545;
+    background-color: #faebd7;
+}

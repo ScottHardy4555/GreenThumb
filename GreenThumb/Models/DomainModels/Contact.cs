@@ -7,13 +7,18 @@ namespace GreenThumb.Models.DomainModels
         public int ContactId { get; set; }
 
         [Required(ErrorMessage = "Please enter a first name")]
-        public string FirstName { get; set; } = string.Empty;
+		[StringLength(50, MinimumLength = 1, ErrorMessage = "First name cannot exceed 50 characters")]
+		//[MaxLength]
+		public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Please enter a last name")]
-        public string LastName { get; set; } = string.Empty;
+		[StringLength(50, MinimumLength = 1, ErrorMessage = "Last name cannot exceed 50 characters")]
+		//[MaxLength]
+		public string LastName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Please enter an email")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "Please provide a valid email address")]
+		[EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Please enter a phone number")]
@@ -21,6 +26,8 @@ namespace GreenThumb.Models.DomainModels
         public string PhoneNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Enter their relation to the project")]
-        public string Relation { get; set; } = string.Empty;
+		[StringLength(50, MinimumLength = 1, ErrorMessage = "Relation cannot exceed 50 characters")]
+		//[MaxLength]
+		public string Relation { get; set; } = string.Empty;
     }
 }

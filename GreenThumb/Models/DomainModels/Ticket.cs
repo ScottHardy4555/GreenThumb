@@ -11,8 +11,7 @@ namespace GreenThumb.Models.DomainModels
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "A technician is required")]
-        public int? TechnicianId { get; set; } = null!;
+        public int? TechnicianId { get; set; } = 0;
         public Technician Technician { get; set; } = null!;
 
         [Required(ErrorMessage = "A type is required")]

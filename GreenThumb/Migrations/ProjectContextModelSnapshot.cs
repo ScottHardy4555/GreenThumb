@@ -218,7 +218,6 @@ namespace GreenThumb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TechnicianId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -463,9 +462,7 @@ namespace GreenThumb.Migrations
                 {
                     b.HasOne("GreenThumb.Models.DomainModels.Technician", "Technician")
                         .WithMany()
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TechnicianId");
 
                     b.Navigation("Technician");
                 });
